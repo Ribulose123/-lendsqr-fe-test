@@ -1,0 +1,110 @@
+// Variables
+$primary-color: #213F7D;
+$secondary-color: #39CDCC;
+$background-color: #f4f4f4;
+$border-radius: 8px;
+
+.login {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  height: 100vh; 
+  background-color: $background-color; 
+  padding: 20px; 
+
+  img {
+    margin-bottom: 20px; 
+  }
+
+  .content {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    background-color: white; 
+    border-radius: $border-radius; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+    padding: 40px; 
+    max-width: 600px; 
+    width: 100%; 
+    gap: 20px; 
+    img {
+      width: 50%; 
+      height: auto; 
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column; 
+      h2 {
+        font-size: 24px; 
+        margin-bottom: 10px; 
+        color: $primary-color; 
+      }
+
+      p {
+        margin-bottom: 20px; 
+        color: gray; 
+      }
+
+      form {
+        display: flex;
+        flex-direction: column; 
+        input {
+          border: 1px solid #ccc; 
+          border-radius: $border-radius; 
+          padding: 10px; 
+          margin-bottom: 15px; 
+          font-size: 16px; 
+
+          &:focus {
+            border-color: $primary-color; 
+            outline: none;           }
+        }
+
+        button {
+          background-color: $primary-color; 
+          color: white; 
+          border: none; 
+          border-radius: $border-radius; 
+          padding: 10px; 
+          font-size: 16px; 
+          cursor: pointer; 
+          transition: background-color 0.3s; 
+
+          &:hover {
+            background-color: $secondary-color;
+          }
+        }
+
+        p {
+          margin-top: 15px; 
+          color: $secondary-color;
+          cursor: pointer; 
+          &:hover {
+            text-decoration: underline; 
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      flex-direction: column; 
+      align-items: center; 
+      img {
+        width: 100%; 
+        margin-bottom: 20px; 
+      }
+
+      .form-container {
+        width: 90%; 
+        max-width: 400px;
+        padding: 0 20px; 
+      }
+    }
+  }
+}
+
+
