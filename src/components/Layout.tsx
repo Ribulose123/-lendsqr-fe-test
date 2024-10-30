@@ -1,14 +1,14 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import Navbar from '../pages/Navbar';
-import { useAppContext } from '../context/AppContext';
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAppContext();
-
+const Layout: React.FC = () => {
   return (
     <div>
-      {isAuthenticated && <Navbar />}
-      <main>{children}</main>
+      <Navbar />
+      <main>
+        <Outlet /> 
+      </main>
     </div>
   );
 };
