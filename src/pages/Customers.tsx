@@ -13,12 +13,12 @@ interface Customer {
   phone: number;
   dateJoined: string;
   status: 'active' | 'inactive' | 'blacklisted' | 'pending';
+  marital: 'Single'| 'Divorced'| 'Married'| 'Widowed';
 }
-
 interface Filters {
   organization?: string;
   name?: string;
-  phone?: string;
+  phone?: number;
   email?: string;
   date?: string;
   status?: string;
@@ -31,6 +31,8 @@ const Customers: React.FC = () => {
   const [filters, setFilters] = useState<Filters>({});
   const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>(customers);
   const [showFilterPanel, setShowFilterPanel] = useState<boolean>(false);
+
+  const navigate = useNavigate()
   
  
   
@@ -82,6 +84,10 @@ const Customers: React.FC = () => {
   };
 
   const toggleFilterPanel = () => setShowFilterPanel((prev) => !prev);
+
+  const handleCustomerClick = (customerId: number) => {
+    navigate(`/users/${customerId}`);
+  };
 
   // Calculate indices for the current page's customers
   const indexOfLastPage = currentPage * itemsPerPage;
@@ -229,7 +235,7 @@ const Customers: React.FC = () => {
                 {customer.status}
               </td>
               <td>
-              <Link to={`/users/${customer.id}`}><BsThreeDotsVertical/></Link>
+              <Link to={`/users/${customer.id}`}  onClick={() => handleCustomerClick(customer.id)}><BsThreeDotsVertical/></Link>
               </td>
             </tr>
           ))}

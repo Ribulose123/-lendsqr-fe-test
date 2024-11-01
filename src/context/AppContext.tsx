@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 interface User {
   id: number;
-  phone: number;
+  phone: string;
   name: {
     first: string;
     last: string;
@@ -53,7 +53,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     localStorage.removeItem('isAuthenticated');
   };
 
-  const getUserById = (id: number) => customers.find((customer) => customer.id === id);
+  const getUserById = (id: number): User | undefined => {
+    return customers.find((customer) => customer.id === id);
+  };
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -63,27 +65,34 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
         const organizations = ['Lendsqr', 'Irorun', 'Lendstar'];
         const statuses = ['pending', 'inactive', 'active', 'blacklisted'];
-        const maritalStatus = ['Single', 'Divorced', 'Married', 'Widowed'];
+        const maritalStatusOptions = ['Single', 'Divorced', 'Married', 'Widowed'];
 
-        const customerWithDetails = customerData.map((customer: any, index: number) => {
+        const formattedCustomers = customerData.map((customer: any, index: number) => {
           const randomOrganization = organizations[Math.floor(Math.random() * organizations.length)];
           const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-          const randomMaritalStatus = maritalStatus[Math.floor(Math.random() * maritalStatus.length)];
+          const randomMaritalStatus = maritalStatusOptions[Math.floor(Math.random() * maritalStatusOptions.length)];
 
           return {
             id: index + 1,
-            ...customer,
+            name: {
+              first: customer.name.first,
+              last: customer.name.last,
+            },
+            phone: customer.phone,
+            email: customer.email,
             organization: randomOrganization,
             status: randomStatus,
-            dateJoined: new Date().toDateString(),
+            dateJoined: new Date().toLocaleDateString(),
             marital: randomMaritalStatus,
             loan: Math.random() < 0.35,
             savings: Math.random() < 0.42,
+            children: Math.random() < 0.3,
+            salary: Math.floor(Math.random() * 50000) + 30000,
           };
         });
 
-        setCustomers(customerWithDetails);
-        localStorage.setItem('customers', JSON.stringify(customerWithDetails));
+        setCustomers(formattedCustomers);
+        localStorage.setItem('customers', JSON.stringify(formattedCustomers));
       } catch (error) {
         console.error('Error fetching customers:', error);
       }
@@ -98,7 +107,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   }, []);
 
   return (
-    <AppContext.Provider value={{ isAuthenticated, users, setUsers, userName, login, logout, getUserById, customers, setCustomers }}>
+    <AppContext.Provider
+      value={{
+        isAuthenticated,
+        users,
+        setUsers,
+        userName,
+        login,
+        logout,
+        getUserById,
+        customers,
+        setCustomers,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

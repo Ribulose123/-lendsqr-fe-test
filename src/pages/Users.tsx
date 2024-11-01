@@ -7,14 +7,14 @@ const Users: React.FC = () => {
   const { getUserById } = useAppContext();
   const user = getUserById(Number(id));
 
-  console.log(id);
-  
+  console.log(user);
 
   if (!user) return <div>User not found</div>;
 
   return (
     <div>
       <h2>{user.name.first} {user.name.last}</h2>
+      <p>vhildren:{user.children}</p>
       <p>Email: {user.email}</p>
       <p>Phone: {user.phone}</p>
       <p>Status: {user.status}</p>
@@ -23,6 +23,8 @@ const Users: React.FC = () => {
       <p>Marital Status: {user.marital}</p>
       <p>Loan: {user.loan ? 'Yes' : 'No'}</p>
       <p>Savings: {user.savings ? 'Yes' : 'No'}</p>
+      {user.salary && <p>Salary: ${user.salary}</p>}
+      {user.children !== undefined && <p>Has Children: {user.children ? 'Yes' : 'No'}</p>}
     </div>
   );
 };
