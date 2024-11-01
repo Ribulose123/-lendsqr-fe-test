@@ -1,0 +1,36 @@
+.dashboard{
+
+    .customer-content{
+        .customer-stats{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .total_stats{
+            background-color: #fff;
+            box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.4);
+            width: 200px;
+            height: 150px;
+            padding: 13px 16px;
+            border-radius: 5px;
+            padding-top: 2rem;
+            padding-left: 2rem;
+            
+            h3{
+                text-transform: uppercase;
+                font-size: 14px;
+            }
+
+            h2{
+                font-size: 24px;
+                color: #213F7D;
+            }
+
+            svg{
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+    }
+}

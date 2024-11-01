@@ -1,0 +1,26 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  .Navbar {
+    width: 160%; // Adjust as needed for sidebar width
+   
+    height: 100vh;
+    left: 0;
+    top: 0;
+     
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 250px; // Offset to account for the sidebar width
+    width: calc(100% - 250px); // Width minus sidebar width to fill remaining space
+    padding: 20px;
+    position: absolute;
+    top: 8rem;
+  }
+  
