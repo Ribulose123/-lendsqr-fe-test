@@ -1,9 +1,349 @@
-.users-info{
-    display: flex;
-    justify-content: flex-end;
-    background-color: green;
+.user-detail{
+    /* margin-right: 28rem; */
+    width: 100%;
 
-    .user-main{
+    .arrow{
+        gap: 20px;
+       a{
         display: flex;
+        align-items: center;
+        grid-area: 20px;
+        text-decoration: none;
+        color: #545F7D;
+
+        p{
+            margin-left: 15px;
+        }
+       }
     }
+
+    .user_black{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h2{
+            text-transform: uppercase;
+        }
+
+        .blacklisted{
+            gap: 10px;
+            margin-right: 5rem;
+            display: flex;
+
+            button{
+
+                border:2px solid #39CDCC;
+                color: #39CDCC;
+                border-radius: 10px;
+                padding: 10px;
+                text-transform: uppercase;
+                &.status-active {
+                    color: rgb(115, 160, 115);
+                    border:2px solid rgb(115, 160, 115);
+                    border-radius: 10px;
+                    padding: 10px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                  }
+                  &.status-inactive {
+                    color: rgb(187, 187, 243);
+                    border:2px solid rgb(187, 187, 243);
+                    border-radius: 10px;
+                    padding: 10px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                  }
+                  &.status-pending {
+                    color: orange;
+                    border:2px solid orange;
+                    border-radius: 10px;
+                    padding: 10px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                  }
+                  &.status-blacklist {
+                    color: red;
+                    border:2px solid red;
+                    border-radius: 10px;
+                    padding: 10px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                  }
+            }
+        }
+
+    }
+    .user_content-info{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 90%;
+        padding: 10px 20px;
+        background-color: white;
+        box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.5);
+        margin-top: 1rem;
+        color: #545F7D;
+
+        .user-content{
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+
+            .user_name{
+                    display: flex;
+                    gap: 10px;
+                    border-right: 1px solid #e0e0e0;
+                .user-img{
+                    img{
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 50px;
+                    }
+                }
+                
+            }
+            .user-bank{
+                border-left: 1px solid #e0e0e0; 
+                gap: 10px;
+                
+
+                h3{
+                    margin-left: 1rem;
+                }
+                
+                p{
+                    margin-left: 1rem;
+                }
+                
+            }
+            
+        }
+
+        .need-inf {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+          
+            p {
+              cursor: pointer;
+              padding: 5px 10px;
+              color: #333;
+              transition: color 0.3s ease, text-decoration 0.3s ease;
+          
+              &:hover {
+                color: #0073e6;
+              }
+          
+              &.active {
+                text-decoration:  green 2px underline;
+                font-weight: bold;
+                 // Distinct color for active state
+              }
+            }
+          }
+          
+    }
+
+    .personal-info-content{
+        width: 90%;
+        padding: 10px 20px;
+        background-color: white;
+        box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.5);
+        margin-top: 1rem;
+        color: #545F7D;
+        
+        
+        .person-info{
+            padding:20px 20px;
+
+            h4{
+                font-size:20px;
+            }
+
+            .cutome-name{
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 15px 10px;
+                border-bottom: 2px solid #e0e0e0;
+                padding: 25px;
+
+                .name{
+                    p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        .socials{
+            border-bottom: 2px solid #e0e0e0;
+           
+            h4{
+                font-size:20px;
+            }
+            .social-info{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                padding: 24px;
+                
+
+                .social-content{
+                    p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+        .guarantor{
+            h2{
+                font-size: 20px;
+            }
+            .guarantors-info{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+
+                .gurato-info{
+                    p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    }
+                }
+            }
+            
+
+        }
+
+        .document{
+            h4{
+                font-size: 20px;
+                text-transform: uppercase;
+                
+            }
+
+           .document-content{
+            display: flex;
+            align-items: center;
+           gap: 10rem;
+           .document-info{
+            p{
+                text-transform: uppercase;
+                font-size: 10px;
+            }
+            strong{
+                font-size: 13px;
+            }
+           }
+           } 
+        }
+
+        .bank{
+            h4{
+                font-size: 20px;
+            }
+
+            .bank-info{
+                display: flex;
+                align-items: center;
+                gap: 10rem;
+                .bank-conte{
+                    p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        .loan{
+            h4{
+                font-size: 20px;
+            }
+
+            .loan-info{
+                display: flex;
+                align-items: center;
+                gap: 10rem;
+                
+                .loan-content{
+                    p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+        .saving{
+            h4{
+                font-size: 20px;
+            }
+
+            .saving-info{
+                display: flex;
+                align-items: center;
+                gap: 10rem; 
+                
+                .saving-content{
+                   p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    } 
+                }
+            }
+
+
+        }
+     
+        .App{
+            
+            h4{
+                font-size: 20px;
+            }
+
+            .app-info{
+                display: flex;
+                align-items: center;
+                gap: 10rem; 
+
+                .app-co{
+                    p{
+                        text-transform: uppercase;
+                        font-size: 10px;
+                    }
+                    strong{
+                        font-size: 13px;
+                    }  
+                }
+            }
+        }
+        
+    }
+
+    @media(max-width:768px){
+        .user-detail{
+            margin-right: 6rem;
+        }
+    }
+    
 }

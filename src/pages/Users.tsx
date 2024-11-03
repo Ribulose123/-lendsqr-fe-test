@@ -2,31 +2,29 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
-const Users: React.FC = () => {
+const User: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { getUserById } = useAppContext();
-  const user = getUserById(Number(id));
+  const customer = getUserById(parseInt(id || '0'));
 
-  console.log(user);
-
-  if (!user) return <div>User not found</div>;
+  if (!customer) return <div>Customer not found</div>;
 
   return (
     <div>
-      <h2>{user.name.first} {user.name.last}</h2>
-      <p>vhildren:{user.children}</p>
-      <p>Email: {user.email}</p>
-      <p>Phone: {user.phone}</p>
-      <p>Status: {user.status}</p>
-      <p>Organization: {user.organization}</p>
-      <p>Date Joined: {user.dateJoined}</p>
-      <p>Marital Status: {user.marital}</p>
-      <p>Loan: {user.loan ? 'Yes' : 'No'}</p>
-      <p>Savings: {user.savings ? 'Yes' : 'No'}</p>
-      {user.salary && <p>Salary: ${user.salary}</p>}
-      {user.children !== undefined && <p>Has Children: {user.children ? 'Yes' : 'No'}</p>}
+      <h1>Customer Details</h1>
+      <p><strong>Name:</strong> {customer.name.first} {customer.name.last}</p>
+      <p><strong>Phone:</strong> {customer.phone}</p>
+      <p><strong>Email:</strong> {customer.email}</p>
+      <p><strong>Organization:</strong> {customer.organization}</p>
+      <p><strong>Status:</strong> {customer.status}</p>
+      <p><strong>Date Joined:</strong> {customer.dateJoined}</p>
+      <p><strong>Marital Status:</strong> {customer.marital}</p>
+      <p><strong>Loan:</strong> {customer.loan ? 'Yes' : 'No'}</p>
+      <p><strong>Savings:</strong> {customer.savings ? 'Yes' : 'No'}</p>
+      <p><strong>Children:</strong> {customer.children ? 'Yes' : 'No'}</p>
+      <p><strong>Salary:</strong> ${customer.salary}</p>
     </div>
   );
 };
 
-export default Users;
+export default User;

@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Customer.scss';
 
 interface Customer {
-  id: string;
+  id: {name:string, value: number}
   organization: string;
   name: { first: string };
   email: string;
@@ -46,7 +46,6 @@ const Customers: React.FC = () => {
   }, [setCustomers]);
 
   useEffect(() => {
-    // Initially set filteredCustomers to all customers
     setFilteredCustomers(customers);
   }, [customers]);
 
@@ -85,9 +84,18 @@ const Customers: React.FC = () => {
 
   const toggleFilterPanel = () => setShowFilterPanel((prev) => !prev);
 
-  const handleCustomerClick = (customerId: number) => {
-    navigate(`/users/${customerId}`);
+  const handleCustomerClick = (customer: Customer) => {
+    
+    navigate(`/users/${customer.id.value}`);
+    
+    
   };
+  
+  
+  
+  
+  
+
 
   // Calculate indices for the current page's customers
   const indexOfLastPage = currentPage * itemsPerPage;
@@ -193,6 +201,8 @@ const Customers: React.FC = () => {
         );
       }
     }
+    ;
+    
 
     return buttons;
   };
@@ -201,52 +211,40 @@ const Customers: React.FC = () => {
 
   return (
     <div className="customers-container">
-      <table className="customer-table">
-        <thead>
-          <tr>
-            <th>Organization</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Date joined</th>
-            <th>Status</th>
-            <th onClick={toggleFilterPanel}><IoFilterOutline /></th>
+    <div className="customer-table-container">
+    <table className="customer-table">
+      <thead>
+        <tr>
+          <th>Organization</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Date joined</th>
+          <th>Status</th>
+          <th onClick={toggleFilterPanel}><IoFilterOutline /></th>
+        </tr>
+      </thead>
+      <tbody>
+        {currentCustomers.map((customer, index) => (
+          <tr onClick={() => navigate(`/users/${customer.id.value}`)} key={customer.id.value || customer.email || index}>
+            <td>{customer.organization}</td>
+            <td>{customer.name.first}</td>
+            <td>{customer.email}</td>
+            <td>{customer.phone}</td>
+            <td>{customer.dateJoined}</td>
+            <td className={`status-${customer.status}`}>{customer.status}</td>
+            <td><BsThreeDotsVertical /></td>
           </tr>
-        </thead>
-        <tbody>
-          {currentCustomers.map((customer, index) => (
-            <tr key={customer.id || customer.email || index}>
-              <td>
-              <Link to={`/users/${customer.id}`}>{customer.organization}</Link>
-              </td>
-              <td>
-              <Link to={`/users/${customer.id}`}>{customer.name.first}</Link>
-              </td>
-              <td>
-              <Link to={`/users/${customer.id}`}>{customer.email}</Link>
-              </td>
-              <td>
-              <Link to={`/users/${customer.id}`}>{customer.phone}</Link>
-              </td>
-              <td>
-              <Link to={`/users/${customer.id}`}>{customer.dateJoined}</Link>
-              </td>
-              <td className={`status-${customer.status}`}>
-                {customer.status}
-              </td>
-              <td>
-              <Link to={`/users/${customer.id}`}  onClick={() => handleCustomerClick(customer.id)}><BsThreeDotsVertical/></Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="pagination">
-        {renderPageButtons()}
-        {currentPage < totalPages && (
-          <button onClick={() => paginate(currentPage + 1)}>&gt;</button>
-        )}
-      </div>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div className="pagination">
+    {renderPageButtons()}
+    {currentPage < totalPages && (
+      <button onClick={() => paginate(currentPage + 1)}>&gt;</button>
+    )}
+  </div>
 
       {showFilterPanel && (
         <div className="filter-panel visible">

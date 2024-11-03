@@ -53,8 +53,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     localStorage.removeItem('isAuthenticated');
   };
 
-  const getUserById = (id: number): User | undefined => {
-    return customers.find((customer) => customer.id === id);
+  const getUserById = (id: number | string) =>{
+  return customers.filter((customer) => customer.id.value === id);
+    
+
   };
 
   useEffect(() => {
@@ -71,7 +73,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           const randomOrganization = organizations[Math.floor(Math.random() * organizations.length)];
           const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
           const randomMaritalStatus = maritalStatusOptions[Math.floor(Math.random() * maritalStatusOptions.length)];
-
+        
+          const childrenCount = Math.floor(Math.random() * 7); // 0-6 range
+        
           return {
             id: index + 1,
             name: {
@@ -86,8 +90,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             marital: randomMaritalStatus,
             loan: Math.random() < 0.35,
             savings: Math.random() < 0.42,
-            children: Math.random() < 0.3,
-            salary: Math.floor(Math.random() * 50000) + 30000,
+            children: childrenCount > 0, 
+            salary: Math.floor(Math.random() * (100000 - 20000 + 1)) + 20000,
           };
         });
 

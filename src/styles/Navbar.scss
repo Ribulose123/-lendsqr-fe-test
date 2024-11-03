@@ -3,13 +3,15 @@
     flex-direction: column;
     background-color: #f8f9fa; // Change this to your preferred background color
     min-height: 100vh;
+    overflow: hidden;
   
     .horizontal-navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 2rem 2rem;
-      background-color: #ffffff; 
+      background-color: #ffffff;
+      width: 100%;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       
   
@@ -51,6 +53,7 @@
           display: flex;
           align-items: center;
           justify-content: flex-end; 
+          padding-right: 7rem;
   
           p {
             margin: 0 1rem;
@@ -128,6 +131,7 @@
         ul {
           list-style: none;
           padding: 0;
+          margin-left: -2rem;
   
           li {
             display: flex;
@@ -143,6 +147,10 @@
             text-decoration: none;
             color: #213F7D;
             font-size: 16px;
+            display:flex;
+            justify-content:space-evenly;
+            align-items: center;
+            /* gap: ; */
             svg {
                 margin-right: 0.5rem;
                 font-size: 12px;
@@ -165,32 +173,50 @@
       }
     }
   
+
+    @media(max-width:1200px){
+      .vertical-nav {
+        width: 140px; 
+      }
+    }
     // Responsive styles
     @media (max-width: 768px) {
+      
       .horizontal-navbar {
-        flex-direction: column; // Stack items on smaller screens
-        padding: 1rem;
-  
+        width: 100%;
+        
+        max-width: 450px;
+        padding: 2rem;
+        
+      
         .navar-hori {
-          flex-direction: column;
           align-items: flex-start;
-  
+      
+      
           .nav-input {
             width: 100%;
+            display: none;
           }
-  
+      
           .hori-content {
             justify-content: space-between;
             width: 100%;
           }
         }
       }
-  
+      
       .vertical-nav {
-        width: 100%; 
-        position: relative;
-        z-index: 1; 
+        width: 120px; 
       }
+              
+
+  }
+
+  @media(max-width:500px){
+    .horizontal-navbar{
+      margin-left:-2rem;
     }
   }
-  
+}  
+
+

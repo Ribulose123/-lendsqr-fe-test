@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/Layout';
 import Users from './pages/Users';
+import UserDetail from './pages/UsersDetailsPage';
 import Customers from './pages/Customers';
 
 const App: React.FC = () => {
@@ -18,7 +19,7 @@ const App: React.FC = () => {
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/customers" element={<Customers />} />
-              <Route path="/users/:id" element={<Users />} />
+              <Route path="/users/:id" element={<UserDetail />} />
             </Route>
           </Routes>
         </AnimatePresence>
