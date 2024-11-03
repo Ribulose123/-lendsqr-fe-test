@@ -5,7 +5,6 @@ import Login from './components/Login';
 import Dashboard from './pages/Dashboard';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/Layout';
-import Users from './pages/Users';
 import UserDetail from './pages/UsersDetailsPage';
 import Customers from './pages/Customers';
 

@@ -32,7 +32,7 @@ const Navbar = () => {
     <div className='Navbar'>
       {/* Horizontal Navbar First */}
       <div className='horizontal-navbar'>
-        <img src="/public/Group.svg" alt="" />
+        <img src="/Group.svg" alt="" />
         <nav className='navar-hori'>
           <div className='nav-input'>
             <input type="text" placeholder='Search for anything' />
@@ -44,7 +44,7 @@ const Navbar = () => {
             <FaRegBell className='bell-icons' />
 
             <div className="avater">
-              <img src="/public/avatar.jpg" alt="" />
+              <img src="/avatar.jpg" alt="" />
               <p>{userName}</p>
             </div>
           </div>
