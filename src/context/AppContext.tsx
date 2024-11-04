@@ -64,7 +64,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const getUserById = (id: number | string) => {
     return customers.find((customer) => customer.id === Number(id));
   };
-  
 
   useEffect(() => {
     const fetchCustomers = async () => {
