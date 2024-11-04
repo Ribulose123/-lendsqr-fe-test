@@ -7,7 +7,6 @@
        a{
         display: flex;
         align-items: center;
-        grid-area: 20px;
         text-decoration: none;
         color: #545F7D;
 
@@ -343,7 +342,46 @@
     @media(max-width:768px){
         .user-detail{
             margin-right: 6rem;
+            width: 60%;
+
+            .user_black{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+    
+                .blacklisted{
+                    gap: 5px;
+    
+                    button{
+                        padding: 5px;
+                    }
+                }
+            }
+    
+            .user_content-info{
+                width: 100%;
+                padding: 5px 10px;
+    
+            }
+
+            .person-info{
+                width: 100%;
+                padding: 5px 10px;
+
+
+                .personal-info-content{
+                    padding: 10px 10px;
+
+                    .cutome-name{
+                        grid-template-columns: repeat(3, 0.1fr);
+                    }
+                }
+            }
+            .bank-info, .app-info, .document-info, .loan-info{
+                gap: 3rem;
+            }
         }
+       
     }
     
 }

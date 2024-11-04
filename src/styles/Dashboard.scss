@@ -64,11 +64,11 @@
         .customer-content{
             .customer-stats{
                 display: grid;
-                grid-template-columns: repeat(2, 0.1fr);
+                grid-template-columns: repeat(2, 0fr);
 
                 .total_stats{
-                    padding: 8px 8px;
-                    width: 100px;
+                    padding: 4px 4px;
+                    width: 120px;
     
                    }
             }

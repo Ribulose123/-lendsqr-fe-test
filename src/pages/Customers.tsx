@@ -2,23 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { IoFilterOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Customer.scss';
 
 interface Customer {
-  id: {name:string, value: number}
+  id: { name: string; value: number };
   organization: string;
   name: { first: string };
   email: string;
   phone: number;
   dateJoined: string;
   status: 'active' | 'inactive' | 'blacklisted' | 'pending';
-  marital: 'Single'| 'Divorced'| 'Married'| 'Widowed';
+  marital: 'Single' | 'Divorced' | 'Married' | 'Widowed';
 }
+
 interface Filters {
   organization?: string;
   name?: string;
-  phone?: number;
+  phone?: string | number;
   email?: string;
   date?: string;
   status?: string;
@@ -32,10 +33,7 @@ const Customers: React.FC = () => {
   const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>(customers);
   const [showFilterPanel, setShowFilterPanel] = useState<boolean>(false);
 
-  const navigate = useNavigate()
-  
- 
-  
+  const navigate = useNavigate();
 
   // Load customers from localStorage on component mount
   useEffect(() => {
@@ -53,49 +51,35 @@ const Customers: React.FC = () => {
     setFilters({ ...filters, [key]: value });
   };
 
-  const filterCustomers = () => {
-    const { organization, name, phone, email, date, status } = filters;
-    const filtered = customers.filter((customer) => {
-      return (
-        (!organization || customer.organization === organization) &&
-        (!name || customer.name?.first?.toLowerCase().includes(name.toLowerCase())) &&
-        (!phone || customer.phone === phone) &&
-        (!email || customer.email.toLowerCase().includes(email.toLowerCase())) &&
-        (!date || customer.dateJoined === date) &&
-        (!status || customer.status === status)
-      );
-    });
-    setFilteredCustomers(filtered);
-    setCurrentPage(1)
-  };
+const filterCustomers = () => {
+  const { organization, name, phone, email, date, status } = filters;
+  const filtered = customers.filter((customer) => {
+    return (
+      (!organization || customer.organization === organization) &&
+      (!name || customer.name?.first?.toLowerCase().includes(name.toLowerCase())) &&
+      (!phone || customer.phone?.toString() === phone?.toString()) &&
+      (!email || customer.email.toLowerCase().includes(email.toLowerCase())) &&
+      (!date || customer.dateJoined === date) &&
+      (!status || customer.status === status)
+    );
+  });
+  setFilteredCustomers(filtered);
+  setCurrentPage(1);
+};
+
 
   const handleApplyFilters = () => {
     filterCustomers();
     setShowFilterPanel(false);
-    
   };
-
 
   const handleResetFilters = () => {
     setFilters({});
     setFilteredCustomers(customers);
-    setCurrentPage(1); // Reset to the first page
+    setCurrentPage(1);
   };
 
   const toggleFilterPanel = () => setShowFilterPanel((prev) => !prev);
-
-  const handleCustomerClick = (customer: Customer) => {
-    
-    navigate(`/users/${customer.id.value}`);
-    
-    
-  };
-  
-  
-  
-  
-  
-
 
   // Calculate indices for the current page's customers
   const indexOfLastPage = currentPage * itemsPerPage;
@@ -103,7 +87,7 @@ const Customers: React.FC = () => {
   const currentCustomers = filteredCustomers.slice(indexOfFirstPage, indexOfLastPage);
 
   const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
-  const maxVisibleButtons = 5; // Show 5 buttons at a time
+  const maxVisibleButtons = 5;
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -201,9 +185,6 @@ const Customers: React.FC = () => {
         );
       }
     }
-    ;
-    
-
     return buttons;
   };
 
@@ -212,109 +193,105 @@ const Customers: React.FC = () => {
   return (
     <div className="customers-container">
     <div className="customer-table-container">
-    <table className="customer-table">
-      <thead>
-        <tr>
-          <th>Organization</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Date joined</th>
-          <th>Status</th>
-          <th onClick={toggleFilterPanel}><IoFilterOutline /></th>
-        </tr>
-      </thead>
-      <tbody>
-        {currentCustomers.map((customer, index) => (
-          <tr onClick={() => navigate(`/users/${customer.id.value}`)} key={customer.id.value || customer.email || index}>
-            <td>{customer.organization}</td>
-            <td>{customer.name.first}</td>
-            <td>{customer.email}</td>
-            <td>{customer.phone}</td>
-            <td>{customer.dateJoined}</td>
-            <td className={`status-${customer.status}`}>{customer.status}</td>
-            <td><BsThreeDotsVertical /></td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  <div className="pagination">
-    {renderPageButtons()}
-    {currentPage < totalPages && (
-      <button onClick={() => paginate(currentPage + 1)}>&gt;</button>
-    )}
-  </div>
-
-      {showFilterPanel && (
-        <div className="filter-panel visible">
-          <h3>Filter Options</h3>
-          <label>
-            Organization:
-            <select
-              value={filters.organization || ''}
-              onChange={(e) => handleFilterChange('organization', e.target.value)}
-            >
-              <option value="">All</option>
-              {organizationOptions.map((org, index) => (
-                <option key={`${org}-${index}`} value={org}>
-                  {org}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={filters.name || ''}
-              onChange={(e) => handleFilterChange('name', e.target.value)}
-            />
-          </label>
-          <label>
-            Phone:
-            <input
-              type="text"
-              value={filters.phone || ''}
-              onChange={(e) => handleFilterChange('phone', e.target.value)}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="text"
-              value={filters.email || ''}
-              onChange={(e) => handleFilterChange('email', e.target.value)}
-            />
-          </label>
-          <label>
-            Date Joined:
-            <input
-              type="date"
-              value={filters.date || ''}
-              onChange={(e) => handleFilterChange('date', e.target.value)}
-            />
-          </label>
-          <label>
-            Status:
-            <select
-              value={filters.status || ''}
-              onChange={(e) => handleFilterChange('status', e.target.value)}
-            >
-              <option value="">All</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="blacklisted">Blacklisted</option>
-              <option value="pending">Pending</option>
-            </select>
-          </label>
-
-          <button onClick={handleApplyFilters}>Apply Filters</button>
-
-          <button onClick={handleResetFilters}>Reset</button>
-        </div>
+      <div className="table__body">
+        <table className="customer-table">
+          <thead>
+            <tr>
+              <th>Organization</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date joined</th>
+              <th>Status</th>
+              <th onClick={toggleFilterPanel} className={showFilterPanel ? 'filter-active' : ''}>
+                <IoFilterOutline />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentCustomers.length > 0 ? (
+              currentCustomers.map((customer) => (
+                <tr key={customer.id.value} onClick={() => navigate(`/users/${customer.id.value}`)}>
+                  <td>{customer.organization}</td>
+                  <td>{customer.name.first}</td>
+                  <td>{customer.email}</td>
+                  <td>{customer.phone}</td>
+                  <td>{customer.dateJoined}</td>
+                  <td className={`status-${customer.status}`}>{customer.status}</td>
+                  <td><BsThreeDotsVertical /></td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7}>No customers found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div className="pagination">
+      {renderPageButtons()}
+      {currentPage < totalPages && (
+        <button onClick={() => paginate(currentPage + 1)}>&gt;</button>
       )}
     </div>
+  
+    {showFilterPanel && (
+      <div className="filter-panel visible">
+        <h3>Filter Options</h3>
+        <label>
+          Organization:
+          <select
+            value={filters.organization || ''}
+            onChange={(e) => handleFilterChange('organization', e.target.value)}
+          >
+            <option value="">All</option>
+            {organizationOptions.map((org, index) => (
+              <option key={`${org}-${index}`} value={org}>
+                {org}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={filters.email || ''}
+            onChange={(e) => handleFilterChange('email', e.target.value)}
+            placeholder="Enter email"
+          />
+        </label>
+        <label>
+          Phone:
+          <input
+            type="tel"
+            value={filters.phone || ''}
+            onChange={(e) => handleFilterChange('phone', e.target.value)}
+            placeholder="Enter phone number"
+          />
+        </label>
+        <label>
+          Status:
+          <select
+            value={filters.status || ''}
+            onChange={(e) => handleFilterChange('status', e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="pending">Pending</option>
+            <option value="declined">Declined</option>
+          </select>
+        </label>
+        <button onClick={handleApplyFilters}>Apply Filters</button>
+        <button onClick={handleResetFilters}>Reset</button>
+      </div>
+    )}
+  </div>
+  
   );
 };
 

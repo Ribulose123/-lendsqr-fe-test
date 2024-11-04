@@ -53,11 +53,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     localStorage.removeItem('isAuthenticated');
   };
 
-  const getUserById = (id: number | string) =>{
-  return customers.filter((customer) => customer.id.value === id);
-    
-
+  const getUserById = (id: string): User | undefined => {
+    return users.find((user) => user.id ===  Number(id));
   };
+  
 
   useEffect(() => {
     const fetchCustomers = async () => {

@@ -3,7 +3,7 @@
     flex-direction: column;
     background-color: #f8f9fa; // Change this to your preferred background color
     min-height: 100vh;
-    overflow: hidden;
+
   
     .horizontal-navbar {
       display: flex;
@@ -38,12 +38,12 @@
   
           .search-icons {
             position: absolute;
-            left: 340px;
+            left: 352px;
             color: #fff;
             font-size: 20px;
             background-color: #007bff;
-            width: 30px;
-            padding: 0.9rem;
+            width: 10px;
+            padding: 1.5rem;
             border-radius: 0 5px 5px 0;
           }
         }
@@ -120,18 +120,19 @@
     }
   
     .vertical-nav {
-      width: 200px; 
+      width: 220px; 
       background-color: #fff; 
       box-shadow: 10px 2px 10px rgba(0, 0, 0, 0.1);
       color: gray;
       padding: 1rem;
       margin-top: 1rem;
+      margin-left: 1rem;
   
       .nav-veri {
         ul {
           list-style: none;
           padding: 0;
-          margin-left: -2rem;
+          margin-left: -1rem;
   
           li {
             display: flex;
@@ -176,7 +177,7 @@
 
     @media(max-width:1200px){
       .vertical-nav {
-        width: 140px; 
+        width: 170px; 
       }
     }
     // Responsive styles
@@ -215,6 +216,11 @@
   @media(max-width:500px){
     .horizontal-navbar{
       margin-left:-2rem;
+    }
+
+    .vertical-nav{
+      width: 120px;
+      margin-left: -0.5rem;
     }
   }
 }  

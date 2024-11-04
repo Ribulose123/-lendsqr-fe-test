@@ -38,7 +38,7 @@ const Login: React.FC = () => {
       initial="hidden"
       animate="show"
     >
-      <img src="/public/Group.svg" alt="Logo" />
+      <img src="/Group.svg" alt="Logo" />
 
       <div className="content">
         <img src="/image/pablo-sign-in 1.jpg" alt="Sign In Illustration" />
