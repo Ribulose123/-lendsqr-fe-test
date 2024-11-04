@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useAppContext } from '../context/AppContext';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { IoFilterOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Customer.scss';
+import React, { useEffect, useState } from "react";
+import { useAppContext, User } from "../context/AppContext";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoFilterOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import "../styles/Customer.scss";
 
-interface Customer {
-  id: {name:string, value: number}
-  organization: string;
-  name: { first: string };
-  email: string;
-  phone: number;
-  dateJoined: string;
-  status: 'active' | 'inactive' | 'blacklisted' | 'pending';
-  marital: 'Single'| 'Divorced'| 'Married'| 'Widowed';
-}
 interface Filters {
   organization?: string;
   name?: string;
-  phone?: number;
+  phone?: string;
   email?: string;
   date?: string;
   status?: string;
@@ -29,17 +19,16 @@ const Customers: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 10;
   const [filters, setFilters] = useState<Filters>({});
-  const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>(customers);
+  const [filteredCustomers, setFilteredCustomers] = useState<User[]>(customers);
   const [showFilterPanel, setShowFilterPanel] = useState<boolean>(false);
 
-  const navigate = useNavigate()
-  
- 
-  
+  const navigate = useNavigate();
 
   // Load customers from localStorage on component mount
   useEffect(() => {
-    const storedCustomers = JSON.parse(localStorage.getItem('customers') || '[]') as Customer[];
+    const storedCustomers = JSON.parse(
+      localStorage.getItem("customers") || "[]"
+    ) as User[];
     if (storedCustomers.length > 0) {
       setCustomers(storedCustomers);
     }
@@ -58,23 +47,23 @@ const Customers: React.FC = () => {
     const filtered = customers.filter((customer) => {
       return (
         (!organization || customer.organization === organization) &&
-        (!name || customer.name?.first?.toLowerCase().includes(name.toLowerCase())) &&
+        (!name ||
+          customer.name?.first?.toLowerCase().includes(name.toLowerCase())) &&
         (!phone || customer.phone === phone) &&
-        (!email || customer.email.toLowerCase().includes(email.toLowerCase())) &&
+        (!email ||
+          customer.email.toLowerCase().includes(email.toLowerCase())) &&
         (!date || customer.dateJoined === date) &&
         (!status || customer.status === status)
       );
     });
     setFilteredCustomers(filtered);
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
   const handleApplyFilters = () => {
     filterCustomers();
     setShowFilterPanel(false);
-    
   };
-
 
   const handleResetFilters = () => {
     setFilters({});
@@ -84,23 +73,17 @@ const Customers: React.FC = () => {
 
   const toggleFilterPanel = () => setShowFilterPanel((prev) => !prev);
 
-  const handleCustomerClick = (customer: Customer) => {
-    
-    navigate(`/users/${customer.id.value}`);
-    
-    
+  const handleCustomerClick = (customer: User) => {
+    navigate(`/users/${customer.id}`);
   };
-  
-  
-  
-  
-  
-
 
   // Calculate indices for the current page's customers
   const indexOfLastPage = currentPage * itemsPerPage;
   const indexOfFirstPage = indexOfLastPage - itemsPerPage;
-  const currentCustomers = filteredCustomers.slice(indexOfFirstPage, indexOfLastPage);
+  const currentCustomers = filteredCustomers.slice(
+    indexOfFirstPage,
+    indexOfLastPage
+  );
 
   const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
   const maxVisibleButtons = 5; // Show 5 buttons at a time
@@ -116,7 +99,7 @@ const Customers: React.FC = () => {
           <button
             key={i}
             onClick={() => paginate(i)}
-            className={currentPage === i ? 'active' : ''}
+            className={currentPage === i ? "active" : ""}
           >
             {i}
           </button>
@@ -129,7 +112,7 @@ const Customers: React.FC = () => {
             <button
               key={i}
               onClick={() => paginate(i)}
-              className={currentPage === i ? 'active' : ''}
+              className={currentPage === i ? "active" : ""}
             >
               {i}
             </button>
@@ -140,7 +123,7 @@ const Customers: React.FC = () => {
           <button
             key={totalPages}
             onClick={() => paginate(totalPages)}
-            className={currentPage === totalPages ? 'active' : ''}
+            className={currentPage === totalPages ? "active" : ""}
           >
             {totalPages}
           </button>
@@ -150,7 +133,7 @@ const Customers: React.FC = () => {
           <button
             key={1}
             onClick={() => paginate(1)}
-            className={currentPage === 1 ? 'active' : ''}
+            className={currentPage === 1 ? "active" : ""}
           >
             1
           </button>
@@ -161,7 +144,7 @@ const Customers: React.FC = () => {
             <button
               key={i}
               onClick={() => paginate(i)}
-              className={currentPage === i ? 'active' : ''}
+              className={currentPage === i ? "active" : ""}
             >
               {i}
             </button>
@@ -172,7 +155,7 @@ const Customers: React.FC = () => {
           <button
             key={1}
             onClick={() => paginate(1)}
-            className={currentPage === 1 ? 'active' : ''}
+            className={currentPage === 1 ? "active" : ""}
           >
             1
           </button>
@@ -183,7 +166,7 @@ const Customers: React.FC = () => {
             <button
               key={i}
               onClick={() => paginate(i)}
-              className={currentPage === i ? 'active' : ''}
+              className={currentPage === i ? "active" : ""}
             >
               {i}
             </button>
@@ -194,57 +177,67 @@ const Customers: React.FC = () => {
           <button
             key={totalPages}
             onClick={() => paginate(totalPages)}
-            className={currentPage === totalPages ? 'active' : ''}
+            className={currentPage === totalPages ? "active" : ""}
           >
             {totalPages}
           </button>
         );
       }
     }
-    ;
-    
-
     return buttons;
   };
 
-  const organizationOptions = [...new Set(customers.map((customer) => customer.organization))];
+  const organizationOptions = [
+    ...new Set(customers.map((customer) => customer.organization)),
+  ];
 
   return (
     <div className="customers-container">
-    <div className="customer-table-container">
-    <table className="customer-table">
-      <thead>
-        <tr>
-          <th>Organization</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Date joined</th>
-          <th>Status</th>
-          <th onClick={toggleFilterPanel}><IoFilterOutline /></th>
-        </tr>
-      </thead>
-      <tbody>
-        {currentCustomers.map((customer, index) => (
-          <tr onClick={() => navigate(`/users/${customer.id.value}`)} key={customer.id.value || customer.email || index}>
-            <td>{customer.organization}</td>
-            <td>{customer.name.first}</td>
-            <td>{customer.email}</td>
-            <td>{customer.phone}</td>
-            <td>{customer.dateJoined}</td>
-            <td className={`status-${customer.status}`}>{customer.status}</td>
-            <td><BsThreeDotsVertical /></td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  <div className="pagination">
-    {renderPageButtons()}
-    {currentPage < totalPages && (
-      <button onClick={() => paginate(currentPage + 1)}>&gt;</button>
-    )}
-  </div>
+      <div className="customer-table-container">
+        <table className="customer-table">
+          <thead>
+            <tr>
+              <th>Organization</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date joined</th>
+              <th>Status</th>
+              <th onClick={toggleFilterPanel}>
+                <IoFilterOutline />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentCustomers.map((customer, index) => (
+              <tr
+                key={index}
+                onClick={() => {
+                  handleCustomerClick(customer);
+                }}
+              >
+                <td>{customer.organization}</td>
+                <td>{customer.name.first}</td>
+                <td>{customer.email}</td>
+                <td>{customer.phone}</td>
+                <td>{customer.dateJoined}</td>
+                <td className={`status-${customer.status}`}>
+                  {customer.status}
+                </td>
+                <td>
+                  <BsThreeDotsVertical />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="pagination">
+        {renderPageButtons()}
+        {currentPage < totalPages && (
+          <button onClick={() => paginate(currentPage + 1)}>&gt;</button>
+        )}
+      </div>
 
       {showFilterPanel && (
         <div className="filter-panel visible">
@@ -252,8 +245,10 @@ const Customers: React.FC = () => {
           <label>
             Organization:
             <select
-              value={filters.organization || ''}
-              onChange={(e) => handleFilterChange('organization', e.target.value)}
+              value={filters.organization || ""}
+              onChange={(e) =>
+                handleFilterChange("organization", e.target.value)
+              }
             >
               <option value="">All</option>
               {organizationOptions.map((org, index) => (
@@ -267,39 +262,39 @@ const Customers: React.FC = () => {
             Name:
             <input
               type="text"
-              value={filters.name || ''}
-              onChange={(e) => handleFilterChange('name', e.target.value)}
+              value={filters.name || ""}
+              onChange={(e) => handleFilterChange("name", e.target.value)}
             />
           </label>
           <label>
             Phone:
             <input
               type="text"
-              value={filters.phone || ''}
-              onChange={(e) => handleFilterChange('phone', e.target.value)}
+              value={filters.phone || ""}
+              onChange={(e) => handleFilterChange("phone", e.target.value)}
             />
           </label>
           <label>
             Email:
             <input
               type="text"
-              value={filters.email || ''}
-              onChange={(e) => handleFilterChange('email', e.target.value)}
+              value={filters.email || ""}
+              onChange={(e) => handleFilterChange("email", e.target.value)}
             />
           </label>
           <label>
             Date Joined:
             <input
               type="date"
-              value={filters.date || ''}
-              onChange={(e) => handleFilterChange('date', e.target.value)}
+              value={filters.date || ""}
+              onChange={(e) => handleFilterChange("date", e.target.value)}
             />
           </label>
           <label>
             Status:
             <select
-              value={filters.status || ''}
-              onChange={(e) => handleFilterChange('status', e.target.value)}
+              value={filters.status || ""}
+              onChange={(e) => handleFilterChange("status", e.target.value)}
             >
               <option value="">All</option>
               <option value="active">Active</option>
